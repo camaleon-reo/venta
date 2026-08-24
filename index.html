@@ -1,0 +1,3183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>BOUTIQUE MODA & ESTILO</title>
+
+<!-- EXCEL -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
+<!-- PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:#080b14;
+    color:#f8fafc;
+}
+
+/* =====================================================
+LOGIN
+===================================================== */
+
+#login{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(
+            circle at center,
+            #182233,
+            #080b14 65%
+        );
+}
+
+.login-box{
+    width:430px;
+    background:#111827;
+    padding:45px;
+    border-radius:15px;
+    box-shadow:0 25px 70px #0009;
+}
+
+.logo{
+    text-align:center;
+    font-size:65px;
+}
+
+.login-title{
+    text-align:center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.login-subtitle{
+    text-align:center;
+    color:#94a3b8;
+    font-size:10px;
+    margin-bottom:25px;
+}
+
+.login-box label{
+    display:block;
+    margin-top:10px;
+}
+
+.login-box input{
+    width:100%;
+    padding:13px;
+    margin-top:5px;
+    margin-bottom:12px;
+    background:#0b1220;
+    color:white;
+    border:1px solid #263244;
+    border-radius:7px;
+}
+
+.login-button{
+    width:100%;
+    margin-top:10px;
+    padding:13px;
+    border:0;
+    border-radius:7px;
+    background:#eab308;
+    color:#111827;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-button:hover{
+    background:#facc15;
+}
+
+.demo{
+    text-align:center;
+    color:#64748b;
+    font-size:11px;
+    margin-top:15px;
+}
+
+
+/* =====================================================
+APP
+===================================================== */
+
+#app{
+    display:none;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    background:#0d121f;
+    overflow-y:auto;
+}
+
+.sidebar-logo{
+    text-align:center;
+    font-size:42px;
+    padding-top:20px;
+}
+
+.store-name{
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.role{
+    text-align:center;
+    color:#94a3b8;
+    font-size:9px;
+    margin:5px 0 20px;
+}
+
+.menu{
+    width:100%;
+    padding:13px 17px;
+    background:transparent;
+    border:0;
+    color:#cbd5e1;
+    text-align:left;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.menu:hover{
+    background:#182233;
+    color:white;
+}
+
+.logout{
+    color:#eab308;
+}
+
+
+/* =====================================================
+CONTENIDO
+===================================================== */
+
+.content{
+    margin-left:250px;
+    padding:30px;
+}
+
+.title{
+    font-size:30px;
+    color:#eab308;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.subtitle{
+    color:#94a3b8;
+}
+
+.card{
+    background:#111827;
+    padding:22px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(190px,1fr));
+    gap:15px;
+}
+
+.stat{
+    background:#111827;
+    padding:20px;
+    border-radius:10px;
+}
+
+.stat h2{
+    margin:0;
+    color:#eab308;
+}
+
+.stat p{
+    color:#94a3b8;
+}
+
+
+/* =====================================================
+BOTONES
+===================================================== */
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.btn{
+    border:0;
+    border-radius:7px;
+    padding:11px 17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.primary{
+    background:#eab308;
+    color:#111827;
+}
+
+.pdf{
+    background:#dc2626;
+    color:white;
+}
+
+.excel{
+    background:#16a34a;
+    color:white;
+}
+
+.whatsapp{
+    background:#25d366;
+    color:white;
+}
+
+.blue{
+    background:#2563eb;
+    color:white;
+}
+
+.danger{
+    background:#dc2626;
+    color:white;
+}
+
+
+/* =====================================================
+BUSCADOR
+===================================================== */
+
+.search{
+    width:100%;
+    padding:13px;
+    background:#0b1220;
+    color:white;
+    border:1px solid #263244;
+    border-radius:7px;
+    margin-bottom:20px;
+}
+
+
+/* =====================================================
+PRODUCTOS
+===================================================== */
+
+.product-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fill,minmax(210px,1fr));
+    gap:18px;
+}
+
+.product{
+    background:#111827;
+    border-radius:12px;
+    overflow:hidden;
+    transition:.2s;
+}
+
+.product:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px #0007;
+}
+
+.product img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    background:#1e293b;
+}
+
+.product-info{
+    padding:15px;
+}
+
+.product-name{
+    font-weight:bold;
+    font-size:16px;
+}
+
+.product-category{
+    color:#94a3b8;
+    font-size:12px;
+}
+
+.price{
+    color:#eab308;
+    font-size:20px;
+    font-weight:bold;
+    margin:8px 0;
+}
+
+.stock{
+    color:#94a3b8;
+    font-size:12px;
+}
+
+
+/* =====================================================
+TABLAS
+===================================================== */
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#0d121f;
+    padding:12px;
+    text-align:left;
+}
+
+td{
+    padding:11px;
+    border-bottom:1px solid #263244;
+}
+
+tr:hover{
+    background:#182233;
+}
+
+
+/* =====================================================
+CARRITO
+===================================================== */
+
+.cart{
+    background:#0d121f;
+    padding:20px;
+    border-radius:10px;
+    position:sticky;
+    top:20px;
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid #263244;
+}
+
+.total{
+    font-size:25px;
+    color:#eab308;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+
+/* =====================================================
+MODAL
+===================================================== */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#0009;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+.modal-box{
+    width:450px;
+    max-width:90%;
+    background:#111827;
+    padding:25px;
+    border-radius:12px;
+}
+
+.modal-box input,
+.modal-box select{
+    width:100%;
+    padding:11px;
+    margin:7px 0 12px;
+    background:#0b1220;
+    color:white;
+    border:1px solid #263244;
+    border-radius:6px;
+}
+
+
+/* =====================================================
+MOVIL
+===================================================== */
+
+@media(max-width:850px){
+
+    .sidebar{
+        width:190px;
+    }
+
+    .content{
+        margin-left:190px;
+        padding:15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+LOGIN
+===================================================== -->
+
+<section id="login">
+
+<div class="login-box">
+
+<div class="logo">👗</div>
+
+<div class="login-title">
+BOUTIQUE MODA & ESTILO
+</div>
+
+<div class="login-subtitle">
+SISTEMA DE VENTAS • INVENTARIO • COMPRAS
+</div>
+
+<label>Usuario</label>
+
+<input
+    id="usuario"
+    placeholder="Usuario"
+>
+
+<label>Contraseña</label>
+
+<input
+    id="password"
+    type="password"
+    placeholder="Contraseña"
+>
+
+<button
+    class="login-button"
+    onclick="login()"
+>
+INICIAR SESIÓN
+</button>
+
+<div class="demo">
+admin / admin123
+<br>
+cajero / cajero123
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+APP
+===================================================== -->
+
+<section id="app">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+👗
+</div>
+
+<div class="store-name">
+TIENDA DE ROPA
+</div>
+
+<div
+    id="role"
+    class="role"
+>
+ADMIN
+</div>
+
+
+<button class="menu"
+        onclick="dashboard()">
+⌂ Dashboard
+</button>
+
+
+<button class="menu"
+        onclick="ventas()">
+🛒 Punto de venta
+</button>
+
+
+<button class="menu"
+        onclick="productos()">
+👗 Productos
+</button>
+
+
+<button class="menu"
+        onclick="inventario()">
+📦 Inventario
+</button>
+
+
+<button class="menu"
+        onclick="compras()">
+🚚 Compras
+</button>
+
+
+<button class="menu"
+        onclick="proveedores()">
+🤝 Proveedores
+</button>
+
+
+<button class="menu"
+        onclick="clientes()">
+👥 Clientes
+</button>
+
+
+<button class="menu"
+        onclick="empleados()">
+♟ Empleados
+</button>
+
+
+<button class="menu"
+        onclick="caja()">
+💰 Caja
+</button>
+
+
+<button class="menu"
+        onclick="reportes()">
+📊 Reportes
+</button>
+
+
+<button class="menu"
+        onclick="configuracion()">
+⚙️ Configuración
+</button>
+
+
+<button class="menu"
+        onclick="usuarios()">
+🔐 Usuarios
+</button>
+
+
+<button class="menu logout"
+        onclick="logout()">
+↪ CERRAR SESIÓN
+</button>
+
+</aside>
+
+
+<!-- CONTENIDO -->
+
+<main class="content">
+
+<div id="contenido"></div>
+
+</main>
+
+</section>
+
+
+<!-- =====================================================
+MODAL
+===================================================== -->
+
+<div
+    id="modal"
+    class="modal"
+>
+
+<div class="modal-box">
+
+<h2 id="modal-title"></h2>
+
+<div id="modal-content"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+DATOS
+===================================================== */
+
+let productosData = [
+
+{
+id:1,
+nombre:"Vestido Elegante Negro",
+categoria:"Vestidos",
+precio:450,
+stock:12,
+imagen:"https://images.unsplash.com/photo-1566174053879-31528523f8ae"
+},
+
+{
+id:2,
+nombre:"Vestido Floral Primavera",
+categoria:"Vestidos",
+precio:380,
+stock:8,
+imagen:"https://images.unsplash.com/photo-1496747611176-843222e1e57c"
+},
+
+{
+id:3,
+nombre:"Vestido Rojo Fiesta",
+categoria:"Vestidos",
+precio:520,
+stock:7,
+imagen:"https://images.unsplash.com/photo-1595777457583-95e059d581b8"
+},
+
+{
+id:4,
+nombre:"Blusa Blanca Elegante",
+categoria:"Blusas",
+precio:180,
+stock:15,
+imagen:"https://images.unsplash.com/photo-1605763240000-7e93b172d754"
+},
+
+{
+id:5,
+nombre:"Blusa Satinada Rosa",
+categoria:"Blusas",
+precio:220,
+stock:10,
+imagen:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1"
+},
+
+{
+id:6,
+nombre:"Blusa Negra Casual",
+categoria:"Blusas",
+precio:190,
+stock:14,
+imagen:"https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3"
+},
+
+{
+id:7,
+nombre:"Camisa Blanca Hombre",
+categoria:"Camisas",
+precio:250,
+stock:20,
+imagen:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf"
+},
+
+{
+id:8,
+nombre:"Camisa Azul Marino",
+categoria:"Camisas",
+precio:280,
+stock:13,
+imagen:"https://images.unsplash.com/photo-1598033129183-c4f50c736f10"
+},
+
+{
+id:9,
+nombre:"Camisa Cuadros",
+categoria:"Camisas",
+precio:230,
+stock:17,
+imagen:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c"
+},
+
+{
+id:10,
+nombre:"Pantalón Jeans Clásico",
+categoria:"Pantalones",
+precio:320,
+stock:18,
+imagen:"https://images.unsplash.com/photo-1542272604-787c3835535d"
+},
+
+{
+id:11,
+nombre:"Jeans Skinny Azul",
+categoria:"Pantalones",
+precio:350,
+stock:15,
+imagen:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246"
+},
+
+{
+id:12,
+nombre:"Jeans Negro",
+categoria:"Pantalones",
+precio:340,
+stock:11,
+imagen:"https://images.unsplash.com/photo-1475178626620-a4d074967452"
+},
+
+{
+id:13,
+nombre:"Pantalón Formal Negro",
+categoria:"Pantalones",
+precio:390,
+stock:9,
+imagen:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1"
+},
+
+{
+id:14,
+nombre:"Falda Negra",
+categoria:"Faldas",
+precio:240,
+stock:10,
+imagen:"https://images.unsplash.com/photo-1583496661160-fb5886a13d27"
+},
+
+{
+id:15,
+nombre:"Falda Plisada Beige",
+categoria:"Faldas",
+precio:280,
+stock:8,
+imagen:"https://images.unsplash.com/photo-1585488433153-7e9b8e8c8b5f"
+},
+
+{
+id:16,
+nombre:"Falda Floral",
+categoria:"Faldas",
+precio:260,
+stock:9,
+imagen:"https://images.unsplash.com/photo-1551028719-00167b16eac5"
+},
+
+{
+id:17,
+nombre:"Chaqueta de Cuero",
+categoria:"Chaquetas",
+precio:650,
+stock:6,
+imagen:"https://images.unsplash.com/photo-1551028719-00167b16eac5"
+},
+
+{
+id:18,
+nombre:"Chaqueta Denim",
+categoria:"Chaquetas",
+precio:480,
+stock:10,
+imagen:"https://images.unsplash.com/photo-1523205565295-f8e0b9f5a5f1"
+},
+
+{
+id:19,
+nombre:"Blazer Negro",
+categoria:"Blazers",
+precio:550,
+stock:7,
+imagen:"https://images.unsplash.com/photo-1507679799987-c73779587ccf"
+},
+
+{
+id:20,
+nombre:"Blazer Beige",
+categoria:"Blazers",
+precio:580,
+stock:5,
+imagen:"https://images.unsplash.com/photo-1506629905607-d9c297d5a6b1"
+},
+
+{
+id:21,
+nombre:"Sudadera Gris",
+categoria:"Sudaderas",
+precio:280,
+stock:20,
+imagen:"https://images.unsplash.com/photo-1556821840-3a63f95609a7"
+},
+
+{
+id:22,
+nombre:"Sudadera Negra",
+categoria:"Sudaderas",
+precio:290,
+stock:16,
+imagen:"https://images.unsplash.com/photo-1620799140408-edc6dcb6d633"
+},
+
+{
+id:23,
+nombre:"Hoodie Beige",
+categoria:"Sudaderas",
+precio:310,
+stock:14,
+imagen:"https://images.unsplash.com/photo-1578681994506-b8f463449011"
+},
+
+{
+id:24,
+nombre:"Camiseta Blanca",
+categoria:"Camisetas",
+precio:120,
+stock:30,
+imagen:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
+},
+
+{
+id:25,
+nombre:"Camiseta Negra",
+categoria:"Camisetas",
+precio:120,
+stock:28,
+imagen:"https://images.unsplash.com/photo-1503341504253-dff4815485f1"
+},
+
+{
+id:26,
+nombre:"Camiseta Oversize",
+categoria:"Camisetas",
+precio:150,
+stock:25,
+imagen:"https://images.unsplash.com/photo-1503342217505-b0a15ec3261c"
+},
+
+{
+id:27,
+nombre:"Polo Azul",
+categoria:"Polos",
+precio:180,
+stock:18,
+imagen:"https://images.unsplash.com/photo-1586363104868-1e6f0a5d1a5c"
+},
+
+{
+id:28,
+nombre:"Polo Blanco",
+categoria:"Polos",
+precio:180,
+stock:20,
+imagen:"https://images.unsplash.com/photo-1625910513413-5fc45e8e0a5a"
+},
+
+{
+id:29,
+nombre:"Short Denim",
+categoria:"Shorts",
+precio:220,
+stock:13,
+imagen:"https://images.unsplash.com/photo-1565084888279-aca607ecce0c"
+},
+
+{
+id:30,
+nombre:"Short Deportivo",
+categoria:"Shorts",
+precio:170,
+stock:15,
+imagen:"https://images.unsplash.com/photo-1517836357463-d25dfeac3438"
+},
+
+{
+id:31,
+nombre:"Pijama Satinado",
+categoria:"Pijamas",
+precio:260,
+stock:8,
+imagen:"https://images.unsplash.com/photo-1596755389378-c31d21fd1273"
+},
+
+{
+id:32,
+nombre:"Pijama Algodón",
+categoria:"Pijamas",
+precio:220,
+stock:10,
+imagen:"https://images.unsplash.com/photo-1576566588028-4147f3842f27"
+},
+
+{
+id:33,
+nombre:"Suéter Beige",
+categoria:"Suéteres",
+precio:330,
+stock:12,
+imagen:"https://images.unsplash.com/photo-1434389677669-e08b4cac3105"
+},
+
+{
+id:34,
+nombre:"Suéter Negro",
+categoria:"Suéteres",
+precio:340,
+stock:10,
+imagen:"https://images.unsplash.com/photo-1576566588028-4147f3842f27"
+},
+
+{
+id:35,
+nombre:"Cardigan Crema",
+categoria:"Cardigans",
+precio:360,
+stock:9,
+imagen:"https://images.unsplash.com/photo-1614975059251-992f1179256f"
+},
+
+{
+id:36,
+nombre:"Abrigo Camel",
+categoria:"Abrigos",
+precio:720,
+stock:5,
+imagen:"https://images.unsplash.com/photo-1544022613-e87ca75a784a"
+},
+
+{
+id:37,
+nombre:"Abrigo Negro",
+categoria:"Abrigos",
+precio:750,
+stock:4,
+imagen:"https://images.unsplash.com/photo-1539533018447-63fcce2678e8"
+},
+
+{
+id:38,
+nombre:"Trench Coat",
+categoria:"Abrigos",
+precio:690,
+stock:6,
+imagen:"https://images.unsplash.com/photo-1520975682031-a7d6c1f5c5f0"
+},
+
+{
+id:39,
+nombre:"Top Deportivo",
+categoria:"Deportivo",
+precio:150,
+stock:22,
+imagen:"https://images.unsplash.com/photo-1518611012118-696072aa579a"
+},
+
+{
+id:40,
+nombre:"Leggings Negros",
+categoria:"Deportivo",
+precio:220,
+stock:25,
+imagen:"https://images.unsplash.com/photo-1506629905607-d9c297d5a6b1"
+},
+
+{
+id:41,
+nombre:"Conjunto Deportivo",
+categoria:"Deportivo",
+precio:390,
+stock:12,
+imagen:"https://images.unsplash.com/photo-1517838277536-f5f99be501f7"
+},
+
+{
+id:42,
+nombre:"Vestido Casual Azul",
+categoria:"Vestidos",
+precio:350,
+stock:9,
+imagen:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f"
+},
+
+{
+id:43,
+nombre:"Vestido Largo Beige",
+categoria:"Vestidos",
+precio:470,
+stock:6,
+imagen:"https://images.unsplash.com/photo-1539008835657-9e8e9680c956"
+},
+
+{
+id:44,
+nombre:"Top Negro",
+categoria:"Tops",
+precio:140,
+stock:19,
+imagen:"https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3"
+},
+
+{
+id:45,
+nombre:"Top Blanco",
+categoria:"Tops",
+precio:140,
+stock:18,
+imagen:"https://images.unsplash.com/photo-1564257577054-7c1c4e4e1f53"
+},
+
+{
+id:46,
+nombre:"Pantalón Cargo",
+categoria:"Pantalones",
+precio:360,
+stock:12,
+imagen:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f"
+},
+
+{
+id:47,
+nombre:"Chaleco Negro",
+categoria:"Chalecos",
+precio:280,
+stock:8,
+imagen:"https://images.unsplash.com/photo-1591369822096-ffd140ec948f"
+},
+
+{
+id:48,
+nombre:"Chaleco Beige",
+categoria:"Chalecos",
+precio:290,
+stock:7,
+imagen:"https://images.unsplash.com/photo-1551028719-00167b16eac5"
+},
+
+{
+id:49,
+nombre:"Camisa Oversize",
+categoria:"Camisas",
+precio:260,
+stock:16,
+imagen:"https://images.unsplash.com/photo-1603252109303-2751441dd157"
+},
+
+{
+id:50,
+nombre:"Vestido Negro Largo",
+categoria:"Vestidos",
+precio:590,
+stock:5,
+imagen:"https://images.unsplash.com/photo-1566174053879-31528523f8ae"
+}
+
+];
+
+
+/* =====================================================
+PROVEEDORES
+===================================================== */
+
+let proveedoresData = [
+
+{
+id:1,
+empresa:"Moda Central",
+contacto:"Carlos Méndez",
+telefono:"50255510001",
+correo:"ventas@modacentral.com",
+direccion:"Ciudad de Guatemala"
+},
+
+{
+id:2,
+empresa:"Textiles Maya",
+contacto:"Ana López",
+telefono:"50255510002",
+correo:"info@textilesmaya.com",
+direccion:"Quetzaltenango"
+},
+
+{
+id:3,
+empresa:"Fashion Import",
+contacto:"Luis Pérez",
+telefono:"50255510003",
+correo:"ventas@fashionimport.com",
+direccion:"Guatemala"
+},
+
+{
+id:4,
+empresa:"Ropa Moderna",
+contacto:"María García",
+telefono:"50255510004",
+correo:"contacto@ropamoderna.com",
+direccion:"Escuintla"
+},
+
+{
+id:5,
+empresa:"Estilo Boutique",
+contacto:"Sofía Ramírez",
+telefono:"50255510005",
+correo:"ventas@estiloboutique.com",
+direccion:"Guatemala"
+}
+
+];
+
+
+/* =====================================================
+CLIENTES
+===================================================== */
+
+let clientesData = [
+
+{
+id:1,
+nombre:"María González",
+telefono:"50255520001",
+correo:"maria@gmail.com",
+direccion:"Guatemala"
+},
+
+{
+id:2,
+nombre:"Carlos Ramírez",
+telefono:"50255520002",
+correo:"carlos@gmail.com",
+direccion:"Mixco"
+},
+
+{
+id:3,
+nombre:"Sofía Martínez",
+telefono:"50255520003",
+correo:"sofia@gmail.com",
+direccion:"Villa Nueva"
+},
+
+{
+id:4,
+nombre:"Ana López",
+telefono:"50255520004",
+correo:"ana@gmail.com",
+direccion:"Amatitlán"
+},
+
+{
+id:5,
+nombre:"José Hernández",
+telefono:"50255520005",
+correo:"jose@gmail.com",
+direccion:"Guatemala"
+}
+
+];
+
+
+/* =====================================================
+EMPLEADOS
+===================================================== */
+
+let empleadosData = [
+
+{
+id:1,
+nombre:"Laura Pérez",
+cargo:"Administradora",
+telefono:"50255530001",
+salario:6500
+},
+
+{
+id:2,
+nombre:"Carlos Méndez",
+cargo:"Vendedor",
+telefono:"50255530002",
+salario:4000
+},
+
+{
+id:3,
+nombre:"Sofía García",
+cargo:"Cajera",
+telefono:"50255530003",
+salario:4000
+},
+
+{
+id:4,
+nombre:"Luis Ramírez",
+cargo:"Encargado de inventario",
+telefono:"50255530004",
+salario:4500
+},
+
+{
+id:5,
+nombre:"Ana Morales",
+cargo:"Vendedora",
+telefono:"50255530005",
+salario:4000
+}
+
+];
+
+
+/* =====================================================
+VENTAS
+===================================================== */
+
+let ventasData = [];
+
+let carrito = [];
+
+let cajaData = {
+
+    efectivo:5000,
+
+    ingresos:0,
+
+    egresos:0
+
+};
+
+
+/* =====================================================
+LOCAL STORAGE
+===================================================== */
+
+function guardarTodo(){
+
+    localStorage.setItem(
+        "productos",
+        JSON.stringify(productosData)
+    );
+
+    localStorage.setItem(
+        "proveedores",
+        JSON.stringify(proveedoresData)
+    );
+
+    localStorage.setItem(
+        "clientes",
+        JSON.stringify(clientesData)
+    );
+
+    localStorage.setItem(
+        "empleados",
+        JSON.stringify(empleadosData)
+    );
+
+    localStorage.setItem(
+        "ventas",
+        JSON.stringify(ventasData)
+    );
+
+    localStorage.setItem(
+        "caja",
+        JSON.stringify(cajaData)
+    );
+
+}
+
+
+/* =====================================================
+CARGAR
+===================================================== */
+
+function cargarTodo(){
+
+    let productos =
+        localStorage.getItem("productos");
+
+    let proveedores =
+        localStorage.getItem("proveedores");
+
+    let clientes =
+        localStorage.getItem("clientes");
+
+    let empleados =
+        localStorage.getItem("empleados");
+
+    let ventas =
+        localStorage.getItem("ventas");
+
+    let caja =
+        localStorage.getItem("caja");
+
+
+    if(productos)
+        productosData =
+            JSON.parse(productos);
+
+    if(proveedores)
+        proveedoresData =
+            JSON.parse(proveedores);
+
+    if(clientes)
+        clientesData =
+            JSON.parse(clientes);
+
+    if(empleados)
+        empleadosData =
+            JSON.parse(empleados);
+
+    if(ventas)
+        ventasData =
+            JSON.parse(ventas);
+
+    if(caja)
+        cajaData =
+            JSON.parse(caja);
+
+}
+
+
+/* =====================================================
+LOGIN
+===================================================== */
+
+function login(){
+
+    let usuario =
+        document.getElementById("usuario")
+        .value.trim();
+
+    let password =
+        document.getElementById("password")
+        .value;
+
+
+    if(
+        usuario === "admin" &&
+        password === "admin123"
+    ){
+
+        entrarApp("ADMIN");
+
+        return;
+
+    }
+
+
+    if(
+        usuario === "cajero" &&
+        password === "cajero123"
+    ){
+
+        entrarApp("CAJERO");
+
+        return;
+
+    }
+
+
+    alert(
+        "Usuario o contraseña incorrectos."
+    );
+
+}
+
+
+function entrarApp(rol){
+
+    document.getElementById("login")
+        .style.display="none";
+
+    document.getElementById("app")
+        .style.display="block";
+
+    document.getElementById("role")
+        .textContent=rol;
+
+    cargarTodo();
+
+    dashboard();
+
+}
+
+
+function logout(){
+
+    document.getElementById("app")
+        .style.display="none";
+
+    document.getElementById("login")
+        .style.display="flex";
+
+}
+
+
+/* =====================================================
+DASHBOARD
+===================================================== */
+
+function dashboard(){
+
+    let valorInventario =
+        productosData.reduce(
+            (total,p) =>
+                total + p.precio*p.stock,
+            0
+        );
+
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="title">
+            Dashboard
+        </div>
+
+        <p class="subtitle">
+            Resumen de Boutique Moda & Estilo
+        </p>
+
+        <div class="cards">
+
+            <div class="stat">
+                <h2>
+                    ${productosData.length}
+                </h2>
+                <p>Productos</p>
+            </div>
+
+            <div class="stat">
+                <h2>
+                    ${proveedoresData.length}
+                </h2>
+                <p>Proveedores</p>
+            </div>
+
+            <div class="stat">
+                <h2>
+                    ${clientesData.length}
+                </h2>
+                <p>Clientes</p>
+            </div>
+
+            <div class="stat">
+                <h2>
+                    ${empleadosData.length}
+                </h2>
+                <p>Empleados</p>
+            </div>
+
+            <div class="stat">
+                <h2>
+                    Q${valorInventario.toFixed(2)}
+                </h2>
+                <p>Valor del inventario</p>
+            </div>
+
+            <div class="stat">
+                <h2>
+                    ${ventasData.length}
+                </h2>
+                <p>Ventas realizadas</p>
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+PRODUCTOS
+===================================================== */
+
+function productos(){
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="title">
+            👗 Productos
+        </div>
+
+        <div class="actions">
+
+            <button
+                class="btn excel"
+                onclick="exportarProductosExcel()"
+            >
+                📊 EXCEL
+            </button>
+
+            <button
+                class="btn pdf"
+                onclick="exportarProductosPDF()"
+            >
+                📄 PDF
+            </button>
+
+        </div>
+
+        <input
+            id="buscarProducto"
+            class="search"
+            placeholder="🔎 Buscar ropa..."
+            oninput="buscarProductos()"
+        >
+
+        <div
+            id="productos"
+            class="product-grid"
+        ></div>
+
+    `;
+
+    mostrarProductos();
+
+}
+
+
+function mostrarProductos(){
+
+    let contenedor =
+        document.getElementById("productos");
+
+    if(!contenedor)
+        return;
+
+
+    let texto =
+        document.getElementById("buscarProducto")
+        ?.value.toLowerCase() || "";
+
+
+    let lista =
+        productosData.filter(
+            p =>
+                p.nombre.toLowerCase()
+                .includes(texto) ||
+
+                p.categoria.toLowerCase()
+                .includes(texto)
+        );
+
+
+    contenedor.innerHTML =
+        lista.map(p => `
+
+            <div class="product">
+
+                <img
+                    src="${p.imagen}"
+                    onerror="this.src='https://via.placeholder.com/400x400?text=Ropa'"
+                >
+
+                <div class="product-info">
+
+                    <div class="product-name">
+                        ${p.nombre}
+                    </div>
+
+                    <div class="product-category">
+                        ${p.categoria}
+                    </div>
+
+                    <div class="price">
+                        Q${p.precio.toFixed(2)}
+                    </div>
+
+                    <div class="stock">
+                        Stock: ${p.stock}
+                    </div>
+
+                    <br>
+
+                    <button
+                        class="btn primary"
+                        onclick="agregarCarrito(${p.id})"
+                    >
+                        🛒 VENDER
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function buscarProductos(){
+
+    mostrarProductos();
+
+}
+
+
+/* =====================================================
+VENTAS
+===================================================== */
+
+function ventas(){
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="title">
+            🛒 Punto de venta
+        </div>
+
+        <div class="card">
+
+            <input
+                id="buscarVenta"
+                class="search"
+                placeholder="🔎 Buscar producto..."
+                oninput="buscarVentaProducto()"
+            >
+
+            <div
+                id="ventaProductos"
+                class="product-grid"
+            ></div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>
+                🛒 Carrito
+            </h2>
+
+            <div id="carrito"></div>
+
+            <div
+                id="total"
+                class="total"
+            >
+                Total: Q0.00
+            </div>
+
+            <br>
+
+            <button
+                class="btn primary"
+                onclick="finalizarVenta()"
+            >
+                💳 COBRAR
+            </button>
+
+        </div>
+
+    `;
+
+
+    mostrarVentaProductos();
+
+    mostrarCarrito();
+
+}
+
+
+function mostrarVentaProductos(){
+
+    let contenedor =
+        document.getElementById(
+            "ventaProductos"
+        );
+
+
+    let texto =
+        document.getElementById(
+            "buscarVenta"
+        )?.value.toLowerCase() || "";
+
+
+    let lista =
+        productosData.filter(
+            p =>
+                p.nombre.toLowerCase()
+                .includes(texto)
+        );
+
+
+    contenedor.innerHTML =
+        lista.map(p=>`
+
+            <div class="product">
+
+                <img
+                    src="${p.imagen}"
+                    onerror="this.src='https://via.placeholder.com/400x400?text=Ropa'"
+                >
+
+                <div class="product-info">
+
+                    <div class="product-name">
+                        ${p.nombre}
+                    </div>
+
+                    <div class="price">
+                        Q${p.precio.toFixed(2)}
+                    </div>
+
+                    <button
+                        class="btn primary"
+                        onclick="agregarCarrito(${p.id})"
+                    >
+                        AGREGAR
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function buscarVentaProducto(){
+
+    mostrarVentaProductos();
+
+}
+
+
+function agregarCarrito(id){
+
+    let producto =
+        productosData.find(
+            p => p.id === id
+        );
+
+
+    if(!producto)
+        return;
+
+
+    if(producto.stock <= 0){
+
+        alert(
+            "Producto agotado."
+        );
+
+        return;
+
+    }
+
+
+    let existente =
+        carrito.find(
+            p => p.id === id
+        );
+
+
+    if(existente){
+
+        if(existente.cantidad <
+           producto.stock){
+
+            existente.cantidad++;
+
+        }
+
+    }else{
+
+        carrito.push({
+
+            id:producto.id,
+
+            nombre:producto.nombre,
+
+            precio:producto.precio,
+
+            cantidad:1
+
+        });
+
+    }
+
+
+    mostrarCarrito();
+
+}
+
+
+function mostrarCarrito(){
+
+    let contenedor =
+        document.getElementById(
+            "carrito"
+        );
+
+
+    if(!contenedor)
+        return;
+
+
+    if(!carrito.length){
+
+        contenedor.innerHTML =
+            "<p>Carrito vacío.</p>";
+
+        document.getElementById("total")
+            .textContent =
+            "Total: Q0.00";
+
+        return;
+
+    }
+
+
+    let total=0;
+
+
+    contenedor.innerHTML =
+        carrito.map(item=>{
+
+            let subtotal =
+                item.precio *
+                item.cantidad;
+
+            total += subtotal;
+
+
+            return `
+
+                <div class="cart-item">
+
+                    <span>
+                        ${item.nombre}
+                        x${item.cantidad}
+                    </span>
+
+                    <span>
+                        Q${subtotal.toFixed(2)}
+                    </span>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    document.getElementById("total")
+        .textContent =
+        "Total: Q" + total.toFixed(2);
+
+}
+
+
+function finalizarVenta(){
+
+    if(!carrito.length){
+
+        alert(
+            "El carrito está vacío."
+        );
+
+        return;
+
+    }
+
+
+    let total =
+        carrito.reduce(
+            (s,item) =>
+                s +
+                item.precio *
+                item.cantidad,
+            0
+        );
+
+
+    carrito.forEach(item=>{
+
+        let producto =
+            productosData.find(
+                p => p.id === item.id
+            );
+
+        if(producto){
+
+            producto.stock -=
+                item.cantidad;
+
+        }
+
+    });
+
+
+    ventasData.push({
+
+        id:
+            ventasData.length+1,
+
+        fecha:
+            new Date().toLocaleString(),
+
+        productos:
+            carrito.map(
+                x => x.nombre
+            ).join(", "),
+
+        total:total
+
+    });
+
+
+    cajaData.ingresos += total;
+
+    cajaData.efectivo += total;
+
+
+    guardarTodo();
+
+
+    carrito=[];
+
+
+    alert(
+        "Venta realizada correctamente.\n\n" +
+        "Total: Q" +
+        total.toFixed(2)
+    );
+
+
+    ventas();
+
+}
+
+
+/* =====================================================
+INVENTARIO
+===================================================== */
+
+function inventario(){
+
+    let bajo =
+        productosData.filter(
+            p => p.stock <= 5
+        ).length;
+
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="title">
+            📦 Inventario
+        </div>
+
+        <div class="cards">
+
+            <div class="stat">
+
+                <h2>
+                    ${productosData.length}
+                </h2>
+
+                <p>
+                    Productos registrados
+                </p>
+
+            </div>
+
+            <div class="stat">
+
+                <h2>
+                    ${bajo}
+                </h2>
+
+                <p>
+                    Productos con poco stock
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Producto</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                    </tr>
+
+                    ${productosData.map(p=>`
+
+                        <tr>
+
+                            <td>
+                                ${p.nombre}
+                            </td>
+
+                            <td>
+                                ${p.categoria}
+                            </td>
+
+                            <td>
+                                Q${p.precio.toFixed(2)}
+                            </td>
+
+                            <td>
+                                ${p.stock}
+                            </td>
+
+                        </tr>
+
+                    `).join("")}
+
+                </table>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+PROVEEDORES
+===================================================== */
+
+function proveedores(){
+
+    moduloTabla(
+        "🤝 PROVEEDORES",
+        proveedoresData,
+        "proveedores"
+    );
+
+}
+
+
+/* =====================================================
+CLIENTES
+===================================================== */
+
+function clientes(){
+
+    moduloTabla(
+        "👥 CLIENTES",
+        clientesData,
+        "clientes"
+    );
+
+}
+
+
+/* =====================================================
+EMPLEADOS
+===================================================== */
+
+function empleados(){
+
+    moduloTabla(
+        "♟ EMPLEADOS",
+        empleadosData,
+        "empleados"
+    );
+
+}
+
+
+/* =====================================================
+TABLAS GENERALES
+===================================================== */
+
+function moduloTabla(
+    titulo,
+    datos,
+    tipo
+){
+
+    document.getElementById("contenido")
+        .innerHTML=`
+
+        <div class="title">
+            ${titulo}
+        </div>
+
+        <div class="card">
+
+            <div class="actions">
+
+                <button
+                    class="btn primary"
+                    onclick="agregarRegistro('${tipo}')"
+                >
+                    ➕ AGREGAR
+                </button>
+
+                <button
+                    class="btn pdf"
+                    onclick="crearPDF('${tipo}')"
+                >
+                    📄 PDF
+                </button>
+
+                <button
+                    class="btn excel"
+                    onclick="crearExcel('${tipo}')"
+                >
+                    📊 EXCEL
+                </button>
+
+                <button
+                    class="btn whatsapp"
+                    onclick="compartir('${tipo}')"
+                >
+                    📱 WHATSAPP
+                </button>
+
+            </div>
+
+            <input
+                id="buscarTabla"
+                class="search"
+                placeholder="🔎 Buscar..."
+                oninput="filtrarTabla('${tipo}')"
+            >
+
+            <div
+                id="tablaGeneral"
+                class="table-container"
+            ></div>
+
+        </div>
+
+    `;
+
+
+    mostrarTabla(
+        datos
+    );
+
+}
+
+
+function mostrarTabla(datos){
+
+    let tabla =
+        document.getElementById(
+            "tablaGeneral"
+        );
+
+
+    if(!tabla)
+        return;
+
+
+    if(!datos.length){
+
+        tabla.innerHTML =
+            "<p>No hay datos.</p>";
+
+        return;
+
+    }
+
+
+    let columnas =
+        Object.keys(datos[0]);
+
+
+    let html=`
+
+        <table>
+
+        <tr>
+
+    `;
+
+
+    columnas.forEach(c=>{
+
+        html += `
+            <th>${c}</th>
+        `;
+
+    });
+
+
+    html += "</tr>";
+
+
+    datos.forEach(fila=>{
+
+        html += "<tr>";
+
+
+        columnas.forEach(c=>{
+
+            html += `
+                <td>
+                    ${fila[c] ?? ""}
+                </td>
+            `;
+
+        });
+
+
+        html += "</tr>";
+
+    });
+
+
+    html += "</table>";
+
+
+    tabla.innerHTML=html;
+
+}
+
+
+/* =====================================================
+FILTRAR
+===================================================== */
+
+function filtrarTabla(tipo){
+
+    let texto =
+        document.getElementById(
+            "buscarTabla"
+        ).value.toLowerCase();
+
+
+    let datos;
+
+
+    if(tipo==="proveedores")
+        datos=proveedoresData;
+
+    if(tipo==="clientes")
+        datos=clientesData;
+
+    if(tipo==="empleados")
+        datos=empleadosData;
+
+
+    let filtrados =
+        datos.filter(
+            x =>
+                JSON.stringify(x)
+                .toLowerCase()
+                .includes(texto)
+        );
+
+
+    mostrarTabla(filtrados);
+
+}
+
+
+/* =====================================================
+AGREGAR REGISTRO
+===================================================== */
+
+function agregarRegistro(tipo){
+
+    if(tipo==="proveedores"){
+
+        proveedoresData.push({
+
+            id:
+                proveedoresData.length+1,
+
+            empresa:
+                prompt("Empresa:"),
+
+            contacto:
+                prompt("Contacto:"),
+
+            telefono:
+                prompt("Teléfono:"),
+
+            correo:
+                prompt("Correo:"),
+
+            direccion:
+                prompt("Dirección:")
+
+        });
+
+
+        guardarTodo();
+
+        proveedores();
+
+    }
+
+
+    if(tipo==="clientes"){
+
+        clientesData.push({
+
+            id:
+                clientesData.length+1,
+
+            nombre:
+                prompt("Nombre:"),
+
+            telefono:
+                prompt("Teléfono:"),
+
+            correo:
+                prompt("Correo:"),
+
+            direccion:
+                prompt("Dirección:")
+
+        });
+
+
+        guardarTodo();
+
+        clientes();
+
+    }
+
+
+    if(tipo==="empleados"){
+
+        empleadosData.push({
+
+            id:
+                empleadosData.length+1,
+
+            nombre:
+                prompt("Nombre:"),
+
+            cargo:
+                prompt("Cargo:"),
+
+            telefono:
+                prompt("Teléfono:"),
+
+            salario:
+                prompt("Salario:")
+
+        });
+
+
+        guardarTodo();
+
+        empleados();
+
+    }
+
+}
+
+
+/* =====================================================
+EXCEL
+===================================================== */
+
+function crearExcel(tipo){
+
+    let datos;
+
+
+    if(tipo==="proveedores")
+        datos=proveedoresData;
+
+    if(tipo==="clientes")
+        datos=clientesData;
+
+    if(tipo==="empleados")
+        datos=empleadosData;
+
+
+    let hoja =
+        XLSX.utils.json_to_sheet(
+            datos
+        );
+
+
+    let libro =
+        XLSX.utils.book_new();
+
+
+    XLSX.utils.book_append_sheet(
+        libro,
+        hoja,
+        tipo
+    );
+
+
+    XLSX.writeFile(
+        libro,
+        tipo+".xlsx"
+    );
+
+}
+
+
+/* =====================================================
+PDF
+===================================================== */
+
+function crearPDF(tipo){
+
+    let datos;
+
+
+    if(tipo==="proveedores")
+        datos=proveedoresData;
+
+    if(tipo==="clientes")
+        datos=clientesData;
+
+    if(tipo==="empleados")
+        datos=empleadosData;
+
+
+    if(!datos.length){
+
+        alert(
+            "No hay información."
+        );
+
+        return;
+
+    }
+
+
+    const {
+        jsPDF
+    } = window.jspdf;
+
+
+    let pdf =
+        new jsPDF();
+
+
+    pdf.setFontSize(18);
+
+    pdf.text(
+        "BOUTIQUE MODA & ESTILO",
+        20,
+        20
+    );
+
+
+    pdf.setFontSize(14);
+
+    pdf.text(
+        tipo.toUpperCase(),
+        20,
+        30
+    );
+
+
+    let columnas =
+        Object.keys(
+            datos[0]
+        );
+
+
+    let filas =
+        datos.map(
+            x =>
+                columnas.map(
+                    c =>
+                        String(
+                            x[c] ?? ""
+                        )
+                )
+        );
+
+
+    pdf.autoTable({
+
+        head:[columnas],
+
+        body:filas,
+
+        startY:40
+
+    });
+
+
+    pdf.save(
+        tipo+".pdf"
+    );
+
+}
+
+
+/* =====================================================
+WHATSAPP
+===================================================== */
+
+function compartir(tipo){
+
+    let numero =
+        prompt(
+            "Número de teléfono con código de país:\nEjemplo: 50255555555"
+        );
+
+
+    if(!numero)
+        return;
+
+
+    numero =
+        numero
+        .replace(/\+/g,"")
+        .replace(/\s/g,"")
+        .replace(/-/g,"")
+        .replace(/\(/g,"")
+        .replace(/\)/g,"");
+
+
+    if(!/^\d+$/.test(numero)){
+
+        alert(
+            "Número inválido."
+        );
+
+        return;
+
+    }
+
+
+    let mensaje =
+        "👗 BOUTIQUE MODA & ESTILO\n\n" +
+        "Te comparto información de " +
+        tipo +
+        ".\n\n" +
+        "Gracias por utilizar nuestro sistema.";
+
+
+    let url =
+        "https://wa.me/" +
+        numero +
+        "?text=" +
+        encodeURIComponent(
+            mensaje
+        );
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =====================================================
+COMPRAS
+===================================================== */
+
+function compras(){
+
+    document.getElementById("contenido")
+        .innerHTML=`
+
+        <div class="title">
+            🚚 Compras
+        </div>
+
+        <div class="card">
+
+            <h2>
+                Registro de compras
+            </h2>
+
+            <p>
+                Selecciona productos para reabastecer
+                el inventario.
+            </p>
+
+            <button
+                class="btn primary"
+                onclick="reabastecer()"
+            >
+                📦 REABASTECER
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function reabastecer(){
+
+    let id =
+        Number(
+            prompt(
+                "ID del producto:"
+            )
+        );
+
+
+    let cantidad =
+        Number(
+            prompt(
+                "Cantidad a agregar:"
+            )
+        );
+
+
+    let producto =
+        productosData.find(
+            p => p.id===id
+        );
+
+
+    if(
+        !producto ||
+        !cantidad ||
+        cantidad<1
+    ){
+
+        alert(
+            "Datos incorrectos."
+        );
+
+        return;
+
+    }
+
+
+    producto.stock += cantidad;
+
+    guardarTodo();
+
+    alert(
+        "Inventario actualizado."
+    );
+
+    inventario();
+
+}
+
+
+/* =====================================================
+CAJA
+===================================================== */
+
+function caja(){
+
+    document.getElementById("contenido")
+        .innerHTML=`
+
+        <div class="title">
+            💰 Caja
+        </div>
+
+        <div class="cards">
+
+            <div class="stat">
+
+                <h2>
+                    Q${cajaData.efectivo.toFixed(2)}
+                </h2>
+
+                <p>
+                    Efectivo disponible
+                </p>
+
+            </div>
+
+            <div class="stat">
+
+                <h2>
+                    Q${cajaData.ingresos.toFixed(2)}
+                </h2>
+
+                <p>
+                    Ingresos
+                </p>
+
+            </div>
+
+            <div class="stat">
+
+                <h2>
+                    Q${cajaData.egresos.toFixed(2)}
+                </h2>
+
+                <p>
+                    Egresos
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <button
+                class="btn danger"
+                onclick="egreso()"
+            >
+                ➖ REGISTRAR EGRESO
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function egreso(){
+
+    let cantidad =
+        Number(
+            prompt(
+                "Cantidad del egreso:"
+            )
+        );
+
+
+    if(
+        !cantidad ||
+        cantidad<=0
+    )
+        return;
+
+
+    cajaData.egresos += cantidad;
+
+    cajaData.efectivo -= cantidad;
+
+    guardarTodo();
+
+    caja();
+
+}
+
+
+/* =====================================================
+REPORTES
+===================================================== */
+
+function reportes(){
+
+    let totalVentas =
+        ventasData.reduce(
+            (s,v)=>s+v.total,
+            0
+        );
+
+
+    document.getElementById("contenido")
+        .innerHTML=`
+
+        <div class="title">
+            📊 Reportes
+        </div>
+
+        <div class="cards">
+
+            <div class="stat">
+
+                <h2>
+                    Q${totalVentas.toFixed(2)}
+                </h2>
+
+                <p>
+                    Ventas acumuladas
+                </p>
+
+            </div>
+
+            <div class="stat">
+
+                <h2>
+                    ${ventasData.length}
+                </h2>
+
+                <p>
+                    Número de ventas
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="actions">
+
+                <button
+                    class="btn pdf"
+                    onclick="reportePDF()"
+                >
+                    📄 PDF
+                </button>
+
+                <button
+                    class="btn excel"
+                    onclick="reporteExcel()"
+                >
+                    📊 EXCEL
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function reporteExcel(){
+
+    let hoja =
+        XLSX.utils.json_to_sheet(
+            ventasData
+        );
+
+
+    let libro =
+        XLSX.utils.book_new();
+
+
+    XLSX.utils.book_append_sheet(
+        libro,
+        hoja,
+        "Ventas"
+    );
+
+
+    XLSX.writeFile(
+        libro,
+        "reporte_ventas.xlsx"
+    );
+
+}
+
+
+function reportePDF(){
+
+    const {
+        jsPDF
+    } = window.jspdf;
+
+
+    let pdf =
+        new jsPDF();
+
+
+    pdf.text(
+        "BOUTIQUE MODA & ESTILO",
+        20,
+        20
+    );
+
+
+    pdf.text(
+        "REPORTE DE VENTAS",
+        20,
+        30
+    );
+
+
+    let filas =
+        ventasData.map(
+            v => [
+                v.id,
+                v.fecha,
+                v.productos,
+                "Q"+v.total.toFixed(2)
+            ]
+        );
+
+
+    pdf.autoTable({
+
+        head:[
+            [
+                "ID",
+                "Fecha",
+                "Productos",
+                "Total"
+            ]
+        ],
+
+        body:filas,
+
+        startY:40
+
+    });
+
+
+    pdf.save(
+        "reporte_ventas.pdf"
+    );
+
+}
+
+
+/* =====================================================
+CONFIGURACIÓN
+===================================================== */
+
+function configuracion(){
+
+    document.getElementById("contenido")
+        .innerHTML=`
+
+        <div class="title">
+            ⚙️ Configuración
+        </div>
+
+        <div class="card">
+
+            <h2>
+                Boutique Moda & Estilo
+            </h2>
+
+            <p>
+                Sistema de administración
+                de tienda de ropa.
+            </p>
+
+            <button
+                class="btn danger"
+                onclick="borrarDatos()"
+            >
+                🗑️ RESTABLECER DATOS
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function borrarDatos(){
+
+    if(
+        !confirm(
+            "¿Seguro que quieres borrar los datos guardados?"
+        )
+    )
+        return;
+
+
+    localStorage.clear();
+
+    location.reload();
+
+}
+
+
+/* =====================================================
+USUARIOS
+===================================================== */
+
+function usuarios(){
+
+    document.getElementById("contenido")
+        .innerHTML=`
+
+        <div class="title">
+            🔐 Usuarios
+        </div>
+
+        <div class="card">
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Usuario
+                    </th>
+
+                    <th>
+                        Rol
+                    </th>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        admin
+                    </td>
+
+                    <td>
+                        Administrador
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        cajero
+                    </td>
+
+                    <td>
+                        Cajero
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+EXPORTAR PRODUCTOS
+===================================================== */
+
+function exportarProductosExcel(){
+
+    let hoja =
+        XLSX.utils.json_to_sheet(
+            productosData
+        );
+
+
+    let libro =
+        XLSX.utils.book_new();
+
+
+    XLSX.utils.book_append_sheet(
+        libro,
+        hoja,
+        "Productos"
+    );
+
+
+    XLSX.writeFile(
+        libro,
+        "productos.xlsx"
+    );
+
+}
+
+
+function exportarProductosPDF(){
+
+    const {
+        jsPDF
+    } = window.jspdf;
+
+
+    let pdf =
+        new jsPDF();
+
+
+    pdf.text(
+        "BOUTIQUE MODA & ESTILO",
+        20,
+        20
+    );
+
+
+    pdf.text(
+        "CATÁLOGO DE PRODUCTOS",
+        20,
+        30
+    );
+
+
+    let filas =
+        productosData.map(
+            p => [
+                p.id,
+                p.nombre,
+                p.categoria,
+                "Q"+p.precio.toFixed(2),
+                p.stock
+            ]
+        );
+
+
+    pdf.autoTable({
+
+        head:[
+            [
+                "ID",
+                "Producto",
+                "Categoría",
+                "Precio",
+                "Stock"
+            ]
+        ],
+
+        body:filas,
+
+        startY:40
+
+    });
+
+
+    pdf.save(
+        "catalogo_productos.pdf"
+    );
+
+}
+
+
+/* =====================================================
+INICIAR
+===================================================== */
+
+cargarTodo();
+
+</script>
+
+</body>
+</html>
